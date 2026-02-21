@@ -1,0 +1,110 @@
+# ─────────────────────────────────────────
+#  SoundGuard AI — .gitignore
+# ─────────────────────────────────────────
+
+# ── Node / JS ─────────────────────────────
+node_modules/
+client/node_modules/
+server/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# ── Build output ──────────────────────────
+client/dist/
+client/build/
+server/dist/
+
+# ── Environment variables ─────────────────
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+server/.env
+client/.env
+client/.env.local
+
+# ── Uploaded & processed audio files ─────
+server/uploads/
+server/processed/
+python-services/uploads/
+python-services/processed/
+uploads/
+
+# ── Python ────────────────────────────────
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+python-services/.venv/
+python-services/venv/
+venv/
+.venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── AI / ML model weights (large binary files) ─
+python-services/models/weights/
+python-services/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+*.h5
+
+# ── Logs ──────────────────────────────────
+logs/
+*.log
+server/logs/
+python-services/logs/
+
+# ── OS generated ──────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDE / Editor ──────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+.history/
+
+# ── Testing ───────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+htmlcov/
+
+# ── Misc ──────────────────────────────────
+.eslintcache
+.stylelintcache
+.cache/
+.parcel-cache/
+*.tsbuildinfo

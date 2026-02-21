@@ -1,0 +1,387 @@
+/* ─────────────────────────────────────────────────────────────
+   Tailwind CSS directives
+   ───────────────────────────────────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   CSS custom properties (design tokens)
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --color-primary:       #007bff;
+  --color-primary-dark:  #0056b3;
+  --color-primary-light: #eff6ff;
+
+  --color-good:  #16a34a;
+  --color-fair:  #ca8a04;
+  --color-poor:  #dc2626;
+
+  --shadow-card:       0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(0, 123, 255, 0.15);
+  --shadow-modal:      0 20px 60px rgba(0, 0, 0, 0.20);
+
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  --radius-card:  12px;
+  --radius-modal: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base resets
+   ───────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   WaveSurfer waveform container
+   ───────────────────────────────────────────────────────────── */
+.waveform-container {
+  width: 100%;
+  height: 128px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #e2e8f0;
+  transition: border-color var(--transition-normal);
+}
+
+.waveform-container:hover {
+  border-color: var(--color-primary);
+}
+
+/* WaveSurfer injects a <wave> element; make sure it fills the container */
+.waveform-container wave {
+  overflow: hidden !important;
+}
+
+/* Loading skeleton shown while waveform is being decoded */
+.waveform-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.waveform-loading span {
+  display: inline-block;
+  width: 3px;
+  border-radius: 3px;
+  background: #cbd5e1;
+  animation: waveform-pulse 1.2s ease-in-out infinite;
+}
+
+.waveform-loading span:nth-child(1)  { height: 16px; animation-delay: 0.0s; }
+.waveform-loading span:nth-child(2)  { height: 32px; animation-delay: 0.1s; }
+.waveform-loading span:nth-child(3)  { height: 48px; animation-delay: 0.2s; }
+.waveform-loading span:nth-child(4)  { height: 64px; animation-delay: 0.3s; }
+.waveform-loading span:nth-child(5)  { height: 80px; animation-delay: 0.4s; }
+.waveform-loading span:nth-child(6)  { height: 64px; animation-delay: 0.5s; }
+.waveform-loading span:nth-child(7)  { height: 48px; animation-delay: 0.6s; }
+.waveform-loading span:nth-child(8)  { height: 32px; animation-delay: 0.7s; }
+.waveform-loading span:nth-child(9)  { height: 16px; animation-delay: 0.8s; }
+
+@keyframes waveform-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50%       { opacity: 1;   transform: scaleY(1);   }
+}
+
+/* Comparison waveform used in Enhancement module */
+.waveform-sm {
+  height: 80px;
+}
+
+/* Spectrogram container used in Explainability module */
+.spectrogram-container {
+  width: 100%;
+  height: 200px;
+  background: #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Modal animations
+   ───────────────────────────────────────────────────────────── */
+
+/* Backdrop */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-backdrop-enter {
+  animation: backdrop-in var(--transition-normal) forwards;
+}
+
+.modal-backdrop-exit {
+  animation: backdrop-out var(--transition-normal) forwards;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes backdrop-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Modal panel */
+.modal-panel {
+  background: #ffffff;
+  border-radius: var(--radius-modal);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 56rem;          /* ~896px */
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  position: relative;
+  outline: none;
+}
+
+.modal-panel-enter {
+  animation: modal-in var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.modal-panel-exit {
+  animation: modal-out var(--transition-fast) ease-in forwards;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+}
+
+/* Scrollbar styling inside modals */
+.modal-panel::-webkit-scrollbar        { width: 6px; }
+.modal-panel::-webkit-scrollbar-track  { background: #f1f5f9; border-radius: 3px; }
+.modal-panel::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: 3px; }
+.modal-panel::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ─────────────────────────────────────────────────────────────
+   Drag-and-drop upload zone
+   ───────────────────────────────────────────────────────────── */
+.dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-card);
+  background: #f8fafc;
+  transition:
+    border-color  var(--transition-normal),
+    background    var(--transition-normal),
+    box-shadow    var(--transition-normal);
+}
+
+.dropzone:hover,
+.dropzone-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.08);
+}
+
+.dropzone-reject {
+  border-color: var(--color-poor);
+  background: #fef2f2;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Module cards (the 2×2 grid on the dashboard)
+   ───────────────────────────────────────────────────────────── */
+.module-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform    var(--transition-normal),
+    box-shadow   var(--transition-normal),
+    border-color var(--transition-normal);
+}
+
+.module-card:hover {
+  transform:    translateY(-2px);
+  box-shadow:   var(--shadow-card-hover);
+  border-color: var(--color-primary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   AQI circular progress  (SVG-based, set via inline style)
+   ───────────────────────────────────────────────────────────── */
+.aqi-ring {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.aqi-ring-track {
+  fill: none;
+  stroke: #e2e8f0;
+  stroke-width: 10;
+}
+
+.aqi-ring-fill {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease, stroke 0.5s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Progress bar
+   ───────────────────────────────────────────────────────────── */
+.progress-bar-track {
+  background: #e2e8f0;
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--color-primary);
+  transition: width 0.4s ease;
+}
+
+.progress-bar-fill.good  { background: var(--color-good); }
+.progress-bar-fill.fair  { background: var(--color-fair); }
+.progress-bar-fill.poor  { background: var(--color-poor); }
+
+/* ─────────────────────────────────────────────────────────────
+   Tampering timeline
+   ───────────────────────────────────────────────────────────── */
+.tampering-timeline {
+  position: relative;
+  height: 40px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tampering-segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 4px;
+  transition: opacity var(--transition-fast);
+}
+
+.tampering-segment:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.tampering-marker {
+  position: absolute;
+  top: -8px;
+  transform: translateX(-50%);
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.tampering-marker:hover {
+  transform: translateX(-50%) scale(1.3);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Utility — fade-in animation for cards/sections appearing
+   ───────────────────────────────────────────────────────────── */
+.fade-in {
+  animation: fade-in var(--transition-normal) ease forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Spinner
+   ───────────────────────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e2e8f0;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Responsive helpers
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .modal-panel {
+    max-height: 95vh;
+    border-radius: 12px 12px 0 0;
+    align-self: flex-end;
+    margin-top: auto;
+  }
+
+  .waveform-container {
+    height: 88px;
+  }
+}
