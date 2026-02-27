@@ -1,11 +1,31 @@
-flask==2.3.0
+# ─────────────────────────────────────────────────────────────
+#  SoundGuard AI — Python Microservices
+#  Compatible with Python 3.10, 3.11, 3.12
+#  Updated to resolve distutils removal in Python 3.12
+# ─────────────────────────────────────────────────────────────
+
+# Web framework
+flask==3.0.3
 flask-cors==4.0.0
-librosa==0.10.0
-numpy==1.24.0
-scipy==1.10.0
+werkzeug==3.0.3
+gunicorn==22.0.0
+
+# Audio processing (Python 3.12 compatible versions)
+librosa==0.10.2
 soundfile==0.12.1
-torch==2.0.0
-torchaudio==2.0.0
-matplotlib==3.7.0
-werkzeug==2.3.0
-gunicorn==21.2.0
+audioread==3.0.1
+resampy==0.4.3
+
+# Numeric / scientific
+numpy==1.26.4
+scipy==1.13.1
+
+# Plotting (for spectrograms)
+matplotlib==3.9.0
+
+# Build tooling fix for Python 3.12 (replaces distutils)
+setuptools==70.0.0
+
+# PyTorch — CPU only (much smaller download, no CUDA needed for dev)
+# Install separately AFTER the above packages with the command below.
+# See INSTALL NOTE at bottom of this file.
