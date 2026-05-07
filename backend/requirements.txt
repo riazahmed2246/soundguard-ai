@@ -1,0 +1,38 @@
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# Validation
+pydantic==2.7.1
+pydantic-settings==2.2.1
+
+# Database
+sqlalchemy==2.0.30
+alembic==1.13.1
+
+# Audio I/O & analysis
+librosa==0.10.2
+soundfile==0.12.1
+torchaudio==2.3.0
+numpy==1.26.4
+scipy==1.13.0
+
+# Noise reduction (noisereduce = Audacity-level spectral gating)
+noisereduce==3.0.2
+
+# Deep learning
+torch==2.3.0
+
+# Visualisation
+matplotlib==3.9.0
+
+# File handling
+python-multipart==0.0.9
+aiofiles==23.2.1
+
+# Utilities
+python-dotenv==1.0.1
+httpx==0.27.0
+
+# Signal processing extras
+scikit-learn==1.5.0
