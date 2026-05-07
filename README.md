@@ -29,6 +29,7 @@ npm ruen dv
 ```
 
 App → http://localhost:5173
+Backend → http://localhost:8000
 
 ---
 
