@@ -1,3 +1,5 @@
+// MainLayout.jsx
+
 import React, { useEffect, useRef } from 'react';
 import TopBar from './TopBar';
 import LeftSidebar from './LeftSidebar';

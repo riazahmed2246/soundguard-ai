@@ -25,7 +25,7 @@ API docs → http://localhost:8000/docs
 cd frontend
 npm install
 cp .env.example .env              # optional – defaults to localhost:8000
-npm ruen dv
+npm run dev
 ```
 
 App → http://localhost:5173
